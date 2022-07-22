@@ -1,10 +1,20 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const typeDefs = gql`
   type User {
-    id: ID!
+    createdAt: String!
     email: String!
-    createdAt: Int!
+    bookmarks: [Bookmark]
+  }
+
+  type Bookmark {
+    name: String!
+    url: String!
+  }
+
+  input BookmarkInput {
+    name: String!
+    url: String!
   }
 
   input SignUpInput {
@@ -26,14 +36,13 @@ export const typeDefs = gql`
   }
 
   type Query {
-    user(id: ID!): User!
-    users: [User]!
-    viewer: User
+    currentUser: User
   }
 
   type Mutation {
+    createBookmark(input: BookmarkInput!): Bookmark!
     signUp(input: SignUpInput!): SignUpPayload!
     signIn(input: SignInInput!): SignInPayload!
     signOut: Boolean!
   }
-`
+`;
